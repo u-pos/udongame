@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>間違い探しゲーム</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+  text-align: center;
+  background: #f5f5f5;
+  overflow-x: hidden;
+}
+
+h1 {
+  margin: 10px 0;
+}
+
+#info {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#game {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.card {
+  aspect-ratio: 1/1;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: white;
+  margin: 10px;
+}
+
+#result {
+  font-size: 20px;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>間違い探し</h1>
+
+<div id="info">
+スコア: <span id="score">0</span> |
+残り時間: <span id="time">60</span>秒
+</div>
+
+<button id="startBtn">スタート</button>
+<button id="restartBtn" style="display:none;">もう一回</button>
+
+<div id="game"></div>
+
+<div id="result"></div>
+
+<script>
+let score = 0;
+let time = 60;
+let timer;
+let playing = false;
+
+const normalImages = ["man1.jpg", "woman1.jpg"];
+const wrongImages = ["man2.jpg", "woman2.jpg"];
+
+function shuffleGame() {
+  const game = document.getElementById("game");
+  game.innerHTML = "";
+
+  const correctIndex = Math.floor(Math.random() * 16);
+
+  for (let i = 0; i < 16; i++) {
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    const img = document.createElement("img");
+
+    if (i === correctIndex) {
+      img.src = wrongImages[Math.floor(Math.random() * 2)];
+
+      div.onclick = () => {
+        if (!playing) return;
+        score++;
+        document.getElementById("score").textContent = score;
+        shuffleGame();
+      };
+
+    } else {
+      img.src = normalImages[Math.floor(Math.random() * 2)];
+
+      div.onclick = () => {
+        if (!playing) return;
+      };
+    }
+
+    div.appendChild(img);
+    game.appendChild(div);
+  }
+}
+
+function startGame() {
+  score = 0;
+  time = 60;
+  playing = true;
+
+  document.getElementById("score").textContent = score;
+  document.getElementById("time").textContent = time;
+  document.getElementById("result").textContent = "";
+
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("restartBtn").style.display = "none";
+
+  shuffleGame();
+
+  timer = setInterval(() => {
+    time--;
+    document.getElementById("time").textContent = time;
+
+    if (time <= 0) {
+      clearInterval(timer);
+      playing = false;
+
+      document.getElementById("result").textContent =
+        "終了！スコア: " + score;
+
+      document.getElementById("restartBtn").style.display = "inline-block";
+    }
+  }, 1000);
+}
+
+document.getElementById("startBtn").onclick = startGame;
+document.getElementById("restartBtn").onclick = startGame;
+</script>
+
+</body>
+</html>
