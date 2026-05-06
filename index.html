@@ -11,9 +11,10 @@ user-scalable=no">
 <title>うどんを探せ！</title>
 
 <style>
+
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
@@ -27,13 +28,40 @@ body{
 
 h1{
   text-align:center;
-  margin:10px 0;
-  font-size:28px;
+  margin:10px 0 6px 0;
+  font-size:30px;
   letter-spacing:2px;
 }
+
+#topButtons{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:12px;
+
+  margin-bottom:8px;
+}
+
+.controlBtn{
+
+  background:#222;
+
+  color:white;
+
+  border:none;
+
+  border-radius:12px;
+
+  padding:12px 18px;
+
+  font-size:18px;
+}
+
 #game{
+
   width:100vw;
-  max-width:100vw;
 
   display:grid;
 
@@ -43,17 +71,26 @@ h1{
 
   padding:6px;
 }
+
 .card{
+
   position:relative;
+
   aspect-ratio:1/1;
+
   overflow:hidden;
-  border-radius:10px;
+
+  border-radius:12px;
 }
 
 .card img{
+
   width:100%;
+
   height:100%;
+
   object-fit:cover;
+
   display:block;
 }
 
@@ -90,6 +127,7 @@ h1{
     opacity:1;
   }
 }
+
 #bottomUI{
 
   position:fixed;
@@ -100,23 +138,41 @@ h1{
 
   width:100%;
 
-  background:rgba(0,0,0,0.92);
+  background:rgba(0,0,0,0.94);
 
   border-top:1px solid #333;
 
   padding:10px 0 14px 0;
-
-  z-index:50;
 }
-  #scoreArea{
+
+#timeArea{
+
+  text-align:center;
+
+  margin-bottom:10px;
+}
+
+#timeLabel{
+
+  font-size:14px;
+
+  color:#888;
+}
+
+#timeValue{
+
+  font-size:34px;
+
+  font-weight:bold;
+}
+
+#scoreArea{
 
   display:flex;
 
   justify-content:center;
 
   gap:18px;
-
-  margin-top:8px;
 }
 
 .scoreBox{
@@ -150,94 +206,31 @@ h1{
   font-weight:bold;
 }
 
-#timeArea{
-
-  margin-top:12px;
-
-  text-align:center;
-}
-
-#timeLabel{
-
-  font-size:14px;
-
-  color:#888;
-}
-
-#timeValue{
-
-  font-size:34px;
-
-  font-weight:bold;
-}
-
-#controlButtons{
-
-  display:flex;
-
-  justify-content:center;
-
-  gap:12px;
-
-  margin-top:12px;
-}
-
-.controlBtn{
-
-  background:#222;
-
-  color:white;
-
-  border:none;
-
-  border-radius:12px;
-
-  padding:12px 18px;
-
-  font-size:18px;
-}
-  
-.uiBox{
-  text-align:center;
-}
-
-.label{
-  font-size:12px;
-  color:#999;
-  letter-spacing:1px;
-}
-
-.value{
-  font-size:28px;
-  font-weight:bold;
-}
-
 #startBtn{
 
-  margin-top:6px;
+  position:fixed;
 
-  padding:14px 40px;
+  left:50%;
 
-  font-size:24px;
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  z-index:100;
+
+  padding:18px 46px;
+
+  font-size:28px;
 
   border:none;
 
-  border-radius:14px;
+  border-radius:16px;
 
   background:#00aaff;
 
   color:white;
 }
 
-#result{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:34px;
-  z-index:90;
-  text-align:center;
-}
 </style>
 </head>
 
@@ -245,164 +238,214 @@ h1{
 
 <h1>うどんを探せ！</h1>
 
+<div id="topButtons">
+
+  <button class="controlBtn"
+  id="muteBtn">
+    ミュート
+  </button>
+
+  <button class="controlBtn"
+  id="retryBtn">
+    やり直す
+  </button>
+
+</div>
+
 <div id="game"></div>
 
 <div id="bottomUI">
 
-  <button id="startBtn">START</button>
+  <div id="timeArea">
+
+    <div id="timeLabel">
+      残り時間
+    </div>
+
+    <div id="timeValue">
+      <span id="time">60</span>秒
+    </div>
+
+  </div>
 
   <div id="scoreArea">
 
     <div class="scoreBox">
-      <div class="scoreLabel">SCORE</div>
-      <div class="scoreValue" id="score">0</div>
+
+      <div class="scoreLabel">
+        SCORE
+      </div>
+
+      <div class="scoreValue"
+      id="score">
+        0
+      </div>
+
     </div>
 
     <div class="scoreBox">
-      <div class="scoreLabel">HIGH SCORE</div>
-      <div class="scoreValue" id="highScore">0</div>
+
+      <div class="scoreLabel">
+        HIGH SCORE
+      </div>
+
+      <div class="scoreValue"
+      id="highScore">
+        0
+      </div>
+
     </div>
-
-  </div>
-
-  <div id="timeArea">
-    <div id="timeLabel">残り時間</div>
-    <div id="timeValue">
-      <span id="time">60</span>秒
-    </div>
-  </div>
-
-  <div id="controlButtons">
-
-    <button class="controlBtn"
-    id="muteBtn">
-      🔊
-    </button>
-
-    <button class="controlBtn"
-    id="retryBtn">
-      やり直す
-    </button>
 
   </div>
 
 </div>
 
-<div id="result"></div>
+<button id="startBtn">
+START
+</button>
 
-<button id="startBtn">START</button>
+<audio id="bgm"
+src="bgm.mp3"
+loop></audio>
 
-<audio id="bgm" src="bgm.mp3" loop></audio>
-<audio id="maruSE" src="maru.mp3"></audio>
-<audio id="batuSE" src="batu.mp3"></audio>
-<audio id="endSE" src="end.mp3"></audio>
+<audio id="maruSE"
+src="maru.mp3"></audio>
+
+<audio id="batuSE"
+src="batu.mp3"></audio>
+
+<audio id="endSE"
+src="end.mp3"></audio>
 
 <script>
-let highScore =
-Number(localStorage.getItem("udonHighScore"))
-|| 0;
 
-document.getElementById("highScore")
+let highScore =
+Number(
+localStorage.getItem(
+"udonHighScore"
+)) || 0;
+
+document
+.getElementById("highScore")
 .textContent = highScore;
 
 let muted = false;
-const normalImages = ["man1.jpg","woman1.jpg"];
-const wrongImages = ["man2.jpg","woman2.jpg"];
+
+const normalImages = [
+"man1.jpg",
+"woman1.jpg"
+];
+
+const wrongImages = [
+"man2.jpg",
+"woman2.jpg"
+];
 
 let score = 0;
 let time = 60;
 let timer;
 let playing = false;
 
-const game = document.getElementById("game");
+const game =
+document.getElementById("game");
 
-function createEffect(type, parent){
+function createEffect(type,parent){
 
-  const effect = document.createElement("img");
+  const effect =
+  document.createElement("img");
 
-  effect.src = type === "maru"
-    ? "maru.png"
-    : "batu.png";
+  effect.src =
+  type === "maru"
+  ? "maru.png"
+  : "batu.png";
 
   effect.className = "effect";
 
   parent.appendChild(effect);
 
   setTimeout(()=>{
+
     effect.remove();
-  },400);
+
+  },250);
 }
 
 function shuffleGame(){
 
   game.innerHTML = "";
 
-  // 3x3なので9枚
   const totalCards = 9;
 
   const correctIndex =
-    Math.floor(Math.random()*totalCards);
+  Math.floor(
+    Math.random()*totalCards
+  );
 
   for(let i=0;i<totalCards;i++){
 
     const card =
-      document.createElement("div");
+    document.createElement("div");
 
     card.className = "card";
 
     const img =
-      document.createElement("img");
+    document.createElement("img");
 
     if(i === correctIndex){
 
       img.src =
-        wrongImages[
-          Math.floor(Math.random()*2)
-        ];
+      wrongImages[
+        Math.floor(Math.random()*2)
+      ];
 
       card.onclick = ()=>{
 
         if(!playing) return;
 
-      score++;
+        score++;
 
-document.getElementById("score")
-.textContent = score;
+        document
+        .getElementById("score")
+        .textContent = score;
 
+        if(score > highScore){
 
-// ハイスコア更新
-if(score > highScore){
+          highScore = score;
 
-  highScore = score;
+          localStorage.setItem(
+            "udonHighScore",
+            highScore
+          );
 
-  localStorage.setItem(
-    "udonHighScore",
-    highScore
-  );
-
-  document.getElementById("highScore")
-  .textContent = highScore;
-}
+          document
+          .getElementById("highScore")
+          .textContent = highScore;
+        }
 
         createEffect("maru",card);
 
-        document.getElementById("maruSE")
-        .currentTime = 0;
+        if(!muted){
 
-        document.getElementById("maruSE")
-        .play();
+          const se =
+          document.getElementById("maruSE");
+
+          se.currentTime = 0;
+          se.play();
+        }
 
         setTimeout(()=>{
+
           shuffleGame();
+
         },120);
       };
 
     }else{
 
       img.src =
-        normalImages[
-          Math.floor(Math.random()*2)
-        ];
+      normalImages[
+        Math.floor(Math.random()*2)
+      ];
 
       card.onclick = ()=>{
 
@@ -410,15 +453,19 @@ if(score > highScore){
 
         createEffect("batu",card);
 
-        document.getElementById("batuSE")
-        .currentTime = 0;
+        if(!muted){
 
-        document.getElementById("batuSE")
-        .play();
+          const se =
+          document.getElementById("batuSE");
+
+          se.currentTime = 0;
+          se.play();
+        }
       };
     }
 
     card.appendChild(img);
+
     game.appendChild(card);
   }
 }
@@ -429,43 +476,55 @@ function endGame(){
 
   clearInterval(timer);
 
-  document.getElementById("bgm").pause();
+  document
+  .getElementById("bgm")
+  .pause();
 
   if(!muted){
 
-    document.getElementById("endSE")
+    document
+    .getElementById("endSE")
     .play();
   }
 
-  document.getElementById("startBtn")
+  document
+  .getElementById("startBtn")
   .innerText = "RESTART";
 
-  document.getElementById("startBtn")
-  .style.display = "inline-block";
+  document
+  .getElementById("startBtn")
+  .style.display = "block";
 }
+
 function startGame(){
+
+  clearInterval(timer);
 
   score = 0;
   time = 60;
+
   playing = true;
 
-  document.getElementById("score")
+  document
+  .getElementById("score")
   .textContent = score;
 
-  document.getElementById("time")
+  document
+  .getElementById("time")
   .textContent = time;
 
-  document.getElementById("result")
-  .innerHTML = "";
-
-  document.getElementById("startBtn")
+  document
+  .getElementById("startBtn")
   .style.display = "none";
 
   const bgm =
-    document.getElementById("bgm");
+  document.getElementById("bgm");
 
   bgm.currentTime = 0;
-  bgm.play();
+
+  if(!muted){
+    bgm.play();
+  }
 
   shuffleGame();
 
@@ -473,10 +532,12 @@ function startGame(){
 
     time--;
 
-    document.getElementById("time")
+    document
+    .getElementById("time")
     .textContent = time;
 
     if(time <= 0){
+
       endGame();
     }
 
@@ -487,34 +548,37 @@ document
 .getElementById("startBtn")
 .onclick = startGame;
 
-document.getElementById("muteBtn")
+document
+.getElementById("muteBtn")
 .onclick = ()=>{
 
   muted = !muted;
 
-  const icon =
-    muted ? "🔇" : "🔊";
-
-  document.getElementById("muteBtn")
-  .innerText = icon;
+  document
+  .getElementById("muteBtn")
+  .innerText =
+  muted
+  ? "ミュート解除"
+  : "ミュート";
 
   const audios =
-    document.querySelectorAll("audio");
+  document.querySelectorAll("audio");
 
   audios.forEach(a=>{
 
     a.muted = muted;
-
   });
 };
 
-document.getElementById("retryBtn")
+document
+.getElementById("retryBtn")
 .onclick = ()=>{
 
   clearInterval(timer);
 
   startGame();
 };
+
 </script>
 
 </body>
