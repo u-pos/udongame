@@ -59,30 +59,36 @@ h1{
 
 .effect{
   position:absolute;
+
   width:55%;
   height:55%;
+
   object-fit:contain;
 
-  left:50%;
   top:50%;
+  left:50%;
 
-  transform:translate(-50%,-50%);
+  margin-left:-27.5%;
+  margin-top:-27.5%;
 
   pointer-events:none;
-  animation:pop 0.4s ease;
-  z-index:10;
+
+  animation:pop 0.35s ease;
+
+  z-index:20;
 }
+
 @keyframes pop{
   0%{
     transform:scale(0.3);
     opacity:0;
   }
+
   100%{
     transform:scale(1);
     opacity:1;
   }
 }
-
 #bottomUI{
   position:fixed;
   bottom:0;
@@ -113,17 +119,30 @@ h1{
 }
 
 button{
+
   position:fixed;
+
+  bottom:90px;
+
   left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  padding:16px 36px;
+
+  transform:translateX(-50%);
+
+  padding:14px 40px;
+
   font-size:24px;
+
   border:none;
+
   border-radius:14px;
+
   background:#00aaff;
+
   color:white;
+
   z-index:100;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
 #result{
