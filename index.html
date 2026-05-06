@@ -355,6 +355,7 @@ let time = 60;
 let timer;
 let playing = false;
 let paused = false;
+let pauseCooldown = false;
 const game =
 document.getElementById("game");
 
@@ -611,7 +612,7 @@ document
 .getElementById("pauseBtn")
 .onclick = ()=>{
 
-  if(!playing) return;
+   if(!playing || pauseCooldown) return;
 
   paused = !paused;
 
@@ -628,19 +629,32 @@ document
     .getElementById("bgm")
     .pause();
 
-  }else{
+}else{
 
-    btn.innerText = "中断";
+  btn.innerText = "中断";
 
-    if(!muted){
+  if(!muted){
 
-      document
-      .getElementById("bgm")
-      .play();
-    }
-
-    timer = setInterval(updateTimer,1000);
+    document
+    .getElementById("bgm")
+    .play();
   }
+
+  timer = setInterval(updateTimer,1000);
+
+  // 5秒間中断禁止
+  pauseCooldown = true;
+
+  btn.style.opacity = "0.4";
+
+  setTimeout(()=>{
+
+    pauseCooldown = false;
+
+    btn.style.opacity = "1";
+
+  },5000);
+}
 };
 </script>
 
