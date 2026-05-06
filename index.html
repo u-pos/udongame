@@ -212,15 +212,9 @@ h1{
   font-weight:bold;
 }
 
-button{
+#startBtn{
 
-  position:fixed;
-
-  bottom:90px;
-
-  left:50%;
-
-  transform:translateX(-50%);
+  margin-top:6px;
 
   padding:14px 40px;
 
@@ -233,10 +227,6 @@ button{
   background:#00aaff;
 
   color:white;
-
-  z-index:100;
-
-  box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
 #result{
@@ -308,6 +298,14 @@ button{
 <audio id="endSE" src="end.mp3"></audio>
 
 <script>
+let highScore =
+Number(localStorage.getItem("udonHighScore"))
+|| 0;
+
+document.getElementById("highScore")
+.textContent = highScore;
+
+let muted = false;
 const normalImages = ["man1.jpg","woman1.jpg"];
 const wrongImages = ["man2.jpg","woman2.jpg"];
 
@@ -366,10 +364,25 @@ function shuffleGame(){
 
         if(!playing) return;
 
-        score++;
+      score++;
 
-        document.getElementById("score")
-        .textContent = score;
+document.getElementById("score")
+.textContent = score;
+
+
+// ハイスコア更新
+if(score > highScore){
+
+  highScore = score;
+
+  localStorage.setItem(
+    "udonHighScore",
+    highScore
+  );
+
+  document.getElementById("highScore")
+  .textContent = highScore;
+}
 
         createEffect("maru",card);
 
@@ -418,19 +431,18 @@ function endGame(){
 
   document.getElementById("bgm").pause();
 
-  document.getElementById("endSE").play();
+  if(!muted){
 
-  document.getElementById("result")
-  .innerHTML =
-  `TIME UP<br>スコア ${score}`;
+    document.getElementById("endSE")
+    .play();
+  }
 
-  const btn =
-    document.getElementById("startBtn");
+  document.getElementById("startBtn")
+  .innerText = "RESTART";
 
-  btn.innerText = "RESTART";
-  btn.style.display = "block";
+  document.getElementById("startBtn")
+  .style.display = "inline-block";
 }
-
 function startGame(){
 
   score = 0;
@@ -474,6 +486,35 @@ function startGame(){
 document
 .getElementById("startBtn")
 .onclick = startGame;
+
+document.getElementById("muteBtn")
+.onclick = ()=>{
+
+  muted = !muted;
+
+  const icon =
+    muted ? "🔇" : "🔊";
+
+  document.getElementById("muteBtn")
+  .innerText = icon;
+
+  const audios =
+    document.querySelectorAll("audio");
+
+  audios.forEach(a=>{
+
+    a.muted = muted;
+
+  });
+};
+
+document.getElementById("retryBtn")
+.onclick = ()=>{
+
+  clearInterval(timer);
+
+  startGame();
+};
 </script>
 
 </body>
