@@ -481,9 +481,9 @@ function shuffleGame(){
 
 function endGame(){
 
+  clearInterval(timer);
   playing = false;
 
-  clearInterval(timer);
 
   document
   .getElementById("bgm")
@@ -509,7 +509,14 @@ function startGame(){
 
   clearInterval(timer);
 
+  paused = false;
+
+  document
+  .getElementById("pauseBtn")
+  .innerText = "中断";
+
   score = 0;
+
   time = 60;
 
   playing = true;
@@ -532,25 +539,13 @@ function startGame(){
   bgm.currentTime = 0;
 
   if(!muted){
+
     bgm.play();
   }
 
   shuffleGame();
 
-  timer = setInterval(()=>{
-
-    time--;
-
-    document
-    .getElementById("time")
-    .textContent = time;
-
-    if(time <= 0){
-
-      endGame();
-    }
-
-  },1000);
+  timer = setInterval(updateTimer,1000);
 }
 
 document
@@ -585,9 +580,32 @@ document
   clearInterval(timer);
 
   startGame();
+  
 };
 
+function updateTimer(){
 
+  if(paused) return;
+
+  time--;
+
+  if(time <= 0){
+
+    time = 0;
+
+    document
+    .getElementById("time")
+    .textContent = time;
+
+    endGame();
+
+    return;
+  }
+
+  document
+  .getElementById("time")
+  .textContent = time;
+}
 
 document
 .getElementById("pauseBtn")
@@ -621,20 +639,7 @@ document
       .play();
     }
 
-    timer = setInterval(()=>{
-
-      time--;
-
-      document
-      .getElementById("time")
-      .textContent = time;
-
-      if(time <= 0){
-
-        endGame();
-      }
-
-    },1000);
+    timer = setInterval(updateTimer,1000);
   }
 };
 </script>
