@@ -58,27 +58,28 @@ h1{
 }
 
 .effect{
+
   position:absolute;
 
-  width:55%;
-  height:55%;
+  inset:0;
+
+  width:45%;
+
+  height:45%;
+
+  margin:auto;
 
   object-fit:contain;
 
-  top:50%;
-  left:50%;
-
-  margin-left:-27.5%;
-  margin-top:-27.5%;
-
   pointer-events:none;
 
-  animation:pop 0.35s ease;
+  animation:pop 0.25s ease;
 
-  z-index:20;
+  z-index:30;
 }
 
 @keyframes pop{
+
   0%{
     transform:scale(0.3);
     opacity:0;
@@ -90,19 +91,112 @@ h1{
   }
 }
 #bottomUI{
+
   position:fixed;
+
   bottom:0;
+
   left:0;
+
   width:100%;
-  background:rgba(0,0,0,0.85);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  padding:12px 0;
+
+  background:rgba(0,0,0,0.92);
+
   border-top:1px solid #333;
-  backdrop-filter:blur(8px);
+
+  padding:10px 0 14px 0;
+
+  z-index:50;
+}
+  #scoreArea{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:18px;
+
+  margin-top:8px;
 }
 
+.scoreBox{
+
+  width:140px;
+
+  background:#1c1c1c;
+
+  border-radius:14px;
+
+  padding:10px 0;
+
+  text-align:center;
+
+  border:1px solid #333;
+}
+
+.scoreLabel{
+
+  font-size:13px;
+
+  color:#888;
+
+  margin-bottom:4px;
+}
+
+.scoreValue{
+
+  font-size:28px;
+
+  font-weight:bold;
+}
+
+#timeArea{
+
+  margin-top:12px;
+
+  text-align:center;
+}
+
+#timeLabel{
+
+  font-size:14px;
+
+  color:#888;
+}
+
+#timeValue{
+
+  font-size:34px;
+
+  font-weight:bold;
+}
+
+#controlButtons{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:12px;
+
+  margin-top:12px;
+}
+
+.controlBtn{
+
+  background:#222;
+
+  color:white;
+
+  border:none;
+
+  border-radius:12px;
+
+  padding:12px 18px;
+
+  font-size:18px;
+}
+  
 .uiBox{
   text-align:center;
 }
@@ -164,15 +258,44 @@ button{
 <div id="game"></div>
 
 <div id="bottomUI">
-  <div class="uiBox">
-    <div class="label">SCORE</div>
-    <div class="value" id="score">0</div>
+
+  <button id="startBtn">START</button>
+
+  <div id="scoreArea">
+
+    <div class="scoreBox">
+      <div class="scoreLabel">SCORE</div>
+      <div class="scoreValue" id="score">0</div>
+    </div>
+
+    <div class="scoreBox">
+      <div class="scoreLabel">HIGH SCORE</div>
+      <div class="scoreValue" id="highScore">0</div>
+    </div>
+
   </div>
 
-  <div class="uiBox">
-    <div class="label">TIME</div>
-    <div class="value" id="time">60</div>
+  <div id="timeArea">
+    <div id="timeLabel">残り時間</div>
+    <div id="timeValue">
+      <span id="time">60</span>秒
+    </div>
   </div>
+
+  <div id="controlButtons">
+
+    <button class="controlBtn"
+    id="muteBtn">
+      🔊
+    </button>
+
+    <button class="controlBtn"
+    id="retryBtn">
+      やり直す
+    </button>
+
+  </div>
+
 </div>
 
 <div id="result"></div>
