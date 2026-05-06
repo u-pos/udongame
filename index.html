@@ -250,6 +250,11 @@ h1{
   </button>
 
   <button class="controlBtn"
+  id="pauseBtn">
+    中断
+  </button>
+
+  <button class="controlBtn"
   id="retryBtn">
     やり直す
   </button>
@@ -349,7 +354,7 @@ let score = 0;
 let time = 60;
 let timer;
 let playing = false;
-
+let paused = false;
 const game =
 document.getElementById("game");
 
@@ -573,7 +578,6 @@ document
     a.muted = muted;
   });
 };
-
 document
 .getElementById("retryBtn")
 .onclick = ()=>{
@@ -583,6 +587,56 @@ document
   startGame();
 };
 
+
+
+document
+.getElementById("pauseBtn")
+.onclick = ()=>{
+
+  if(!playing) return;
+
+  paused = !paused;
+
+  const btn =
+  document.getElementById("pauseBtn");
+
+  if(paused){
+
+    btn.innerText = "再開";
+
+    clearInterval(timer);
+
+    document
+    .getElementById("bgm")
+    .pause();
+
+  }else{
+
+    btn.innerText = "中断";
+
+    if(!muted){
+
+      document
+      .getElementById("bgm")
+      .play();
+    }
+
+    timer = setInterval(()=>{
+
+      time--;
+
+      document
+      .getElementById("time")
+      .textContent = time;
+
+      if(time <= 0){
+
+        endGame();
+      }
+
+    },1000);
+  }
+};
 </script>
 
 </body>
